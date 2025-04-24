@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- Link al foglio di stile css -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <!-- Link al foglio di stile css -->
+
+  <!-- Meta tag for PWA -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="white">
+  <meta name="description" content="PreviewReading">
+  <!-- Meta tag for PWA -->
+
+  <!--Specific meta tag for IOS -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="PreviewReading">
+  <!--Specific meta tag for IOS -->
+
+  <!-- Specific meta tag for OS Windows -->
+  <meta name="application-name" content="PreviewReading">
+  <meta name="msapplication-TitleImage" content="{{ url_for('static', filename='images/144x144.png') }}">
+  <meta name="msapplication-TitleColor" content="#cc194b">
+  <!-- Specific meta tag for OS Windows -->
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Bootstrap -->
+
+  <title>Registrazione</title>
+</head>
+<body>
+<!-- Logo -->
+<header class="logo">
+  <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo Università">
+</header>
+<!-- Logo -->
+
+<!-- Form di Registrazione -->
+<div id="register-container" class="container">
+  <h2>Registrazione</h2>
+  <form id="register-form" method="post" action="{{ url_for('register') }}">
+    <!-- Matricola -->
+    <div class="matricola-container">
+      <i class="fa-solid fa-user"></i>
+      <label for="register-matricola"></label>
+      <input type="text" pattern="\d*" class="matricola" id="register-matricola" name="matricola" required placeholder="Matricola" autocomplete="off">
+    </div>
+    <!-- Matricola -->
+
+    <!-- Password -->
+    <div id="password-container">
+      <i class="fa-solid fa-lock"></i>
+      <label for="register-password"></label>
+      <input type="password" id="register-password" class="password" name="password" required placeholder="Password" autocomplete="off">
+      <button class="showhide_passw" type="button" aria-label="Mostra/Nascondi password">
+        <i class="fa-regular fa-eye"></i>
+      </button>
+    </div>
+    <!-- Password -->
+
+    <!-- Conferma Password -->
+    <div id="confirm-password-container">
+      <i class="fa-solid fa-lock"></i>
+      <label for="register-confirm-password"></label>
+      <input type="password" id="register-confirm-password" class="password" name="confirm_password" required placeholder="Conferma Password" autocomplete="off">
+      <button class="showhide_confirmed_password" type="button" aria-label="Mostra/Nascondi password">
+        <i class="fa-regular fa-eye"></i>
+      </button>
+    </div>
+    <!-- Conferma Password -->
+
+    <!-- Pulsante di Registrazione -->
+    <input id="register-button" type="submit" value="Registrati">
+    <!-- Pulsante di Registrazione -->
+
+    <!-- Link al login -->
+    <p id="back-to-login">
+      <a href="{{ url_for('index') }}">Hai già un account? Accedi</a>
+    </p>
+    <!-- Link al login -->
+  </form>
+</div>
+<!-- Form di Registrazione -->
+
+<!-- JavaScript lato client -->
+<script>
+  document.querySelector('.showhide_passw').addEventListener('click', function () {
+    const passwordInput = document.getElementById('register-password');
+    const icon = this.querySelector('i');
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      icon.classList.remove('fa-eye');
+      icon.classList.add('fa-eye-slash');
+    } else {
+      passwordInput.type = 'password';
+      icon.classList.remove('fa-eye-slash');
+      icon.classList.add('fa-eye');
+    }
+  });
+  document.querySelector('.showhide_confirmed_password').addEventListener('click', function () {
+    const passwordInput = document.getElementById('register-confirm-password');
+    const icon = this.querySelector('i');
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      icon.classList.remove('fa-eye');
+      icon.classList.add('fa-eye-slash');
+    } else {
+      passwordInput.type = 'password';
+      icon.classList.remove('fa-eye-slash');
+      icon.classList.add('fa-eye');
+    }
+  });
+</script>
+<!-- JavaScript lato client -->
+
+<!-- JavaScript lato server -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" async></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous" async></script>
+<!-- JavaScript lato server -->
+</body>
+</html>

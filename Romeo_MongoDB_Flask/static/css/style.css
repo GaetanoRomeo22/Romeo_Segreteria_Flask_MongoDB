@@ -1,0 +1,148 @@
+body {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'sans-serif';
+    height: 100vh;
+    margin: 0;
+}
+
+/* Intestazione form di login */
+.logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 10px;
+}
+/* Intestazione form di login */
+
+/* Form di login e reset */
+#login-container, #reset-container {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 35%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+#login-container:hover, #reset-container:hover {
+    transform: scale(1.02);
+}
+
+#login-container form, #reset-container form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.matricola-container, #password-container, #confirm-password-container, #email-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.matricola-container i, #password-container i, #confirm-password-container i, #email-container i {
+    font-size: 18px;
+    color: #1E3A8A;
+    position: absolute;
+    left: 12px;
+}
+
+.matricola, .password, #email {
+    width: 100%;
+    padding: 12px 12px 12px 40px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+}
+
+.matricola:hover, .password:hover, #email:hover {
+    border-color: #3B82F6;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+}
+
+.matricola:focus, .password:focus, #email:focus {
+    border-color: #1E3A8A;
+    box-shadow: 0 0 10px rgba(30, 58, 138, 0.4);
+    outline: none;
+}
+
+#login-button, #reset-button {
+    width: 100%;
+    padding: 12px;
+    background: #1E3A8A;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+    margin-top: 10px;
+}
+
+#login-button:hover, #reset-button:hover {
+    background: #3B82F6;
+    transform: scale(1.05);
+}
+
+#login-error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+#password-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.showhide_passw, .showhide_confirmed_password {
+    position: absolute;
+    right: 35px;
+    top: 40%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #1E3A8A;
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.showhide_passw:hover, .showhide_confirmed_password:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+#forgot-password, #back-to-login {
+    margin-top: 20px;
+}
+
+#forgot-password a, #back-to-login a {
+    color: #1E3A8A;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+#forgot-password a:hover, #back-to-login a:hover {
+    text-decoration: underline;
+    color: #3B82F6;
+}
