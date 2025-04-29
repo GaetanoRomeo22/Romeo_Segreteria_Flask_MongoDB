@@ -84,12 +84,20 @@
     </p>
     <!-- Link al login -->
   </form>
+  <p id="register-error-message" class="error-message">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-danger">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
 </div>
 <!-- Form di Registrazione -->
 
 <!-- JavaScript lato client -->
 <script>
-  document.querySelector('.showhide_passw').addEventListener('click', function () {
+  document.querySelector('.showhide_passw').addEventListener('click', function () { // funzione per nascondere/visualizzare la password
     const passwordInput = document.getElementById('register-password');
     const icon = this.querySelector('i');
     if (passwordInput.type === 'password') {
@@ -102,7 +110,7 @@
       icon.classList.add('fa-eye');
     }
   });
-  document.querySelector('.showhide_confirmed_password').addEventListener('click', function () {
+  document.querySelector('.showhide_confirmed_password').addEventListener('click', function () { // funzione per nascondere/visualizzare la conferma password
     const passwordInput = document.getElementById('register-confirm-password');
     const icon = this.querySelector('i');
     if (passwordInput.type === 'password') {
@@ -114,6 +122,33 @@
       icon.classList.remove('fa-eye-slash');
       icon.classList.add('fa-eye');
     }
+  });
+  document.getElementById('login-form').addEventListener('submit', function (event) { // funzione per controllare il formato della matricola e della password
+    const matricola = document.getElementById('login-matricola').value;
+    const password = document.getElementById('login-password').value;
+    const confirmPassword = document.getElementById('register-confirm-password').value;
+    const errorMessage = document.getElementById('register-error-message');
+    const matricolaPattern = /^\d{10}$/; // La matricola deve essere una stringa numerica di 10 cifre
+    const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/; // La password deve essere lunga almeno 8 caratteri, contenere almeno una lettera maiuscola e un numero
+    if (password !== confirmPassword) { // Controlla se la password e la conferma password sono uguali
+      errorMessage.style.display = 'block';
+      errorMessage.textContent = 'Le password non corrispondono';
+      event.preventDefault(); // Impedisce l'invio del modulo
+      return;
+    }
+    if (!matricolaPattern.test(matricola)) { // Controllo del formato della matricola
+      errorMessage.style.display = 'block';
+      errorMessage.textContent = 'La matricola deve essere una stringa numerica di 10 cifre';
+      event.preventDefault(); // Impedisce l'invio del modulo
+      return;
+    }
+    if (!passwordPattern.test(password)) { // Controllo del formato della password
+      errorMessage.style.display = 'block';
+      errorMessage.textContent = 'La password deve essere lunga almeno 8 caratteri, contenere almeno una lettera maiuscola e un numero';
+      event.preventDefault(); // Impedisce l'invio del modulo
+      return;
+    }
+    errorMessage.style.display = 'none';
   });
 </script>
 <!-- JavaScript lato client -->

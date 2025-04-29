@@ -102,7 +102,7 @@ body {
     transform: scale(1.05);
 }
 
-#login-error-message {
+#login-error-message, #register-error-message {
     color: red;
     font-size: 14px;
     margin-top: 10px;

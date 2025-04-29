@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from pymongo import MongoClient
 import bcrypt
 
@@ -38,21 +38,33 @@ def show_retrieve_password():
 
 @app.route('/showAccount')  # Route per la pagina dell'account
 def show_account():
+    if 'user' not in session:  # Controlla se l'utente è loggato
+        flash('Devi effettuare il login per accedere a questa pagina')
+        return redirect(url_for('index'))
     return render_template('account.html')
 
 
 @app.route('/showAvailableExams') # Route per la pagina degli esami prenotabili
 def show_available_exams():
+    if 'user' not in session:  # Controlla se l'utente è loggato
+        flash('Devi effettuare il login per accedere a questa pagina')
+        return redirect(url_for('index'))
     return render_template('appelli_disponibili.html')
 
 
 @app.route('/showGivenExams') # Route per la pagina del libretto degli esami
 def show_given_exams():
+    if 'user' not in session:  # Controlla se l'utente è loggato
+        flash('Devi effettuare il login per accedere a questa pagina')
+        return redirect(url_for('index'))
     return render_template('libretto.html')
 
 
 @app.route('/showBookedExams') # Route per la pagina degli esami prenotati
 def show_booked_exams():
+    if 'user' not in session:  # Controlla se l'utente è loggato
+        flash('Devi effettuare il login per accedere a questa pagina')
+        return redirect(url_for('index'))
     return render_template('appelli_prenotati.html')
 
 
@@ -67,6 +79,7 @@ def login():  # Funzione di login
         try:
             user = db.users.find_one({'matricola': matricola, 'password': password})  # Cerca l'utente nel database
             if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):  # Se l'utente esiste
+                session['user'] = matricola # Salva la matricola dello studente nella sessione
                 return redirect(url_for('show_account'))  # Reindirizza alla pagina dell'account
             else:  # Se l'utente non esiste
                 flash('Matricola o password errati')
@@ -80,8 +93,15 @@ def login():  # Funzione di login
 def register():  # Funzione di registrazione
     matricola = request.form['matricola']  # Recupera la matricola dal form
     password = request.form['password']  # Recupera la password dal form
-    if not matricola or not password:  # Controlla se matricola e password sono vuoti
-        flash('Matricola o password mancanti')
+    confirmPassword = request.form['confirm_password'] # Recupera la password di conferma dal form
+    if not matricola or not matricola.isdigit() or len(matricola) != 10: # Controlla il formato della matricola
+        flash('La matricola deve essere una stringa numerica di 10 cifre')
+        return redirect(url_for('show_register'))
+    if password != confirmPassword: # Controlla se le password coincidono
+        flash('Le password non corrispondono')
+        return redirect(url_for('show_register'))
+    if not password or len(password) < 8 or not re.search(r'[A-Z]', password) or not re.search(r'\d', password): # Controlla il formato della password
+        flash('La password deve essere lunga almeno 8 caratteri, contenere almeno una lettera maiuscola e un numero')
         return redirect(url_for('show_register'))
     else:
         try:
@@ -99,6 +119,7 @@ def register():  # Funzione di registrazione
 
 @app.route('/logout') # Route per il logout
 def logout(): # Funzione di logout
+    session.clear() # Rimuove tutti i dati dalla sessione
     return redirect(url_for('index')) # Reindirizza alla pagina di login
 
 
